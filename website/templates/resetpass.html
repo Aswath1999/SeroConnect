@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Change Your Password?</h1>
+<br />
+<form class="form-signin" role="form" method="post" action="">
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password"/>
+    </div>
+  <button class="btn btn-success" type="submit">Reset your password</button>
+</form>
+{% endblock %}
