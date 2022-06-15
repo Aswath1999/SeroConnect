@@ -1,9 +1,9 @@
 from flask import Blueprint,render_template,request,flash, url_for,redirect
-from .models import User
-from . import db
+from ..database.models import User
+from .. import db
 from flask_bcrypt import generate_password_hash,check_password_hash
-from .token import generate_confirmation_token, confirm_token
-from .mailer import send_email
+from ..email.token import generate_confirmation_token, confirm_token
+from ..email.mailer import send_email
 from flask_login import (login_user, logout_user, login_required, current_user)
 
 auth=Blueprint('auth',__name__)
@@ -27,7 +27,7 @@ def login():
             flash('Email does not exist.', category='error')
             print('Error')
 
-    return render_template("login.html", user=current_user)
+    return render_template("auth/login.html", user=current_user)
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
@@ -56,15 +56,19 @@ def sign_up():
 
             token = generate_confirmation_token(user.email)
             confirm_url = url_for('auth.confirm_email', token=token, _external=True) #_external=True for absolute path
-            html = render_template('activate.html', confirm_url=confirm_url)
+            html = render_template('auth/activate.html', confirm_url=confirm_url)
             subject = "Please confirm your email"
             send_email(user.email, subject, html)
 
             # login_user(new_user, remember=True)
             flash('Account created successfully',category='success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('auth.info'))
 
-    return render_template('signup.html',user=current_user)
+    return render_template('auth/signup.html',user=current_user)
+
+@auth.route('/confirmation')
+def info():
+    return render_template('auth/info.html')
 
 @auth.route('/confirm/<token>')
 def confirm_email(token):
@@ -83,7 +87,7 @@ def confirm_email(token):
         db.session.commit()
         login_user(user, remember=True)
         flash('You have confirmed your account. Thanks!', 'success')
-    return redirect(url_for('views.home'))
+    return redirect(url_for('auth.info'))
 
 @auth.route('/logout')
 @login_required
@@ -95,16 +99,16 @@ def logout():
 @login_required
 def unconfirmed():
     if current_user.activation:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('views.home'))
     flash('Please confirm your account!', 'warning')
-    return render_template('unconfirmed.html')
+    return render_template('auth/unconfirmed.html')
 
 @auth.route('/resend')
 @login_required
 def resend_confirmation():
     token = generate_confirmation_token(current_user.email)
     confirm_url = url_for('auth.confirm_email', token=token, _external=True)
-    html = render_template('activate.html', confirm_url=confirm_url)
+    html = render_template('auth/activate.html', confirm_url=confirm_url)
     subject = "Please confirm your email"
     send_email(current_user.email, subject, html)
     flash('A new confirmation email has been sent.', 'success')
@@ -119,12 +123,12 @@ def forgot():
         token=generate_confirmation_token(user.email)
         db.session.commit()
         reset_url = url_for('auth.resetpass', token=token, _external=True)
-        html=render_template('reset.html',username=user.email,reset_url=reset_url)
+        html=render_template('auth/resetpassword/reset.html',username=user.email,reset_url=reset_url)
         subject = "Reset your password"
         send_email(user.email, subject, html)
         flash('A password reset email has been sent via email.', 'success')
         return redirect(url_for("auth.login"))
-    return render_template('forgot.html')
+    return render_template('auth/resetpassword/forgot.html')
 
 @auth.route('/resetpass/<token>', methods=['GET', 'POST'])
 def resetpass(token):
@@ -147,7 +151,7 @@ def resetpass(token):
 
         else:
             flash('You can now change your password.', 'success')
-            return render_template('resetpass.html')
+            return render_template('auth/resetpassword/resetpass.html')
     else:
         flash('Can not reset the password, try again.', 'danger')
 
