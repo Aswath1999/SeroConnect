@@ -13,9 +13,14 @@ db.init_app(app)
     
 from .views import views
 from .auth.auth import auth
+from .post.post import post
 
 app.register_blueprint(auth, url_prefix='/')
 app.register_blueprint(views, url_prefix='/')
+app.register_blueprint(post, url_prefix='/')
+
+
+
 
 def create_database(app):
     if not path.exists('website/' + DB_NAME):

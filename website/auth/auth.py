@@ -68,7 +68,7 @@ def sign_up():
 
 @auth.route('/confirmation')
 def info():
-    return render_template('auth/info.html')
+    return render_template('auth/info.html',user=current_user)
 
 @auth.route('/confirm/<token>')
 def confirm_email(token):
@@ -87,7 +87,7 @@ def confirm_email(token):
         db.session.commit()
         login_user(user, remember=True)
         flash('You have confirmed your account. Thanks!', 'success')
-    return redirect(url_for('auth.info'))
+    return redirect(url_for('views.home'))
 
 @auth.route('/logout')
 @login_required
@@ -123,12 +123,12 @@ def forgot():
         token=generate_confirmation_token(user.email)
         db.session.commit()
         reset_url = url_for('auth.resetpass', token=token, _external=True)
-        html=render_template('auth/resetpassword/reset.html',username=user.email,reset_url=reset_url)
+        html=render_template('auth/resetpassword/reset.html',username=user.email,reset_url=reset_url,user=current_user)
         subject = "Reset your password"
         send_email(user.email, subject, html)
         flash('A password reset email has been sent via email.', 'success')
-        return redirect(url_for("auth.login"))
-    return render_template('auth/resetpassword/forgot.html')
+        return redirect(url_for("auth.info"))
+    return render_template('auth/resetpassword/forgot.html',user=current_user)
 
 @auth.route('/resetpass/<token>', methods=['GET', 'POST'])
 def resetpass(token):
@@ -151,8 +151,8 @@ def resetpass(token):
 
         else:
             flash('You can now change your password.', 'success')
-            return render_template('auth/resetpassword/resetpass.html')
+            return render_template('auth/resetpassword/resetpass.html',user=current_user)
     else:
         flash('Can not reset the password, try again.', 'danger')
 
-    return redirect(url_for('views.home'))
+    return redirect(url_for('views.home'),user=current_user)
