@@ -4,18 +4,19 @@
 <ul>
   
     {%for post in posts%}
-    <li class="s"> 
+    <li> 
       {% if post.user_id==user.id%}
         <form action="{{ url_for('post.createpost',postid=post.id) }}" class='deleteform' method="POST">
-          <button id='deletebtn' action="submit">Delete</button>
+          <button class='deletebtn' action="submit">Delete {{post.id}}</button>
         </form>
         <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
           <button  id='editbtn' action="submit">Edit</button>
         </form>
-      {% endif %}
+        {% endif %}
+        {{post.id}}
         {{post.title}}  
         {{post.content}}
-    </li>
+      </li>
     {%endfor%}
 
 </ul>

@@ -10,11 +10,16 @@ post=Blueprint('post',__name__)
 @login_required
 @check_confirmed
 def createpost(postid):
-    post = Post.query.filter_by(id=postid).first()
-    # post = Post.query.filter_by(id=id).first()
-    db.session.delete(post)
-    db.session.commit()
-    return 'success'
+    if request.method == 'POST':
+        post = Post.query.filter_by(id=postid).first()
+        if post:
+            db.session.delete(post)
+            db.session.commit()
+            return 'success'
+        else:
+            return "no posts found"
+    else:
+        return 'Failure'
 
     # if request.method == 'POST':
     #     post = Post.query.filter_by(id=postid).first()
@@ -22,9 +27,7 @@ def createpost(postid):
     #         db.session.delete(post)
     #         db.session.commit()
     #         return redirect(url_for('views.forum'))
-    #     else:
-    #         print('no')
-    # return f'<h1>hi {postid}</h1>'
+    # return redirect(url_for('views.forum'))
 
 @post.route('/post/edit/<postid>',methods=['GET', 'POST'])
 @login_required
