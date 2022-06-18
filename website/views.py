@@ -1,7 +1,7 @@
 from flask import Blueprint,render_template,request,redirect, url_for
 from flask_login import login_required,current_user
 from .decorators import check_confirmed
-from .database.models import Post
+from .database.models import Post,User
 from . import db
 views=Blueprint('views',__name__)
 
@@ -21,9 +21,9 @@ def forum():
     if request.method == 'POST':
         title=request.form.get('Title')
         content=request.form.get('content')
-        post = Post(title=title, content=content,user_id=current_user.id)
+        post = Post(title=title, content=content,user_id=current_user.id,anonymous=False)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('views.forum'))
-    return render_template("forum/forum.html",user=current_user,posts=post)
+    return render_template("forum/forum.html",user=current_user,postuser=User,posts=post)
     

@@ -16,4 +16,6 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    date=db.Column(db.DateTime(timezone=True), default=func.now())
+    anonymous=db.Column(db.Boolean,nullable=False,default=False)
     owner=db.relationship('User',back_populates='Post')

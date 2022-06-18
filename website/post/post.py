@@ -1,7 +1,7 @@
 from flask import Blueprint,render_template,request,redirect,url_for
 from flask_login import login_required,current_user
 from ..decorators import check_confirmed
-from ..database.models import  Post
+from ..database.models import  Post,User
 from .. import db
 
 post=Blueprint('post',__name__)
@@ -9,7 +9,7 @@ post=Blueprint('post',__name__)
 @post.route('/post/<postid>',methods=['GET', 'POST'])
 @login_required
 @check_confirmed
-def createpost(postid):
+def deletepost(postid):
     if request.method == 'POST':
         post = Post.query.filter_by(id=postid).first()
         if post:
@@ -44,3 +44,16 @@ def editpost(postid):
         db.session.commit()
         return redirect(url_for('views.forum'))
    
+@post.route('/anonymous',methods=['GET', 'POST'])
+@login_required
+@check_confirmed
+def anonymous():
+    post=Post.query.all()
+    if request.method == 'POST':
+        title=request.form.get('Title')
+        content=request.form.get('content')
+        post = Post(title=title, content=content,user_id=current_user.id,anonymous=True)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('views.forum'))
+    return render_template("forum/forum.html",user=current_user,postuser=User,posts=post)

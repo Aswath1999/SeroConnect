@@ -5,14 +5,20 @@
   
     {%for post in posts%}
     <li> 
+      {% if post.anonymous==False %}
+        <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
+      {%else%}
+        <h3>Anonymous</h3>
+      {%endif%}
+
       {% if post.user_id==user.id%}
-        <form action="{{ url_for('post.createpost',postid=post.id) }}" class='deleteform' method="POST">
+        <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
           <button class='deletebtn' action="submit">Delete {{post.id}}</button>
         </form>
         <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
           <button  id='editbtn' action="submit">Edit</button>
         </form>
-        {% endif %}
+      {% endif %}
         {{post.id}}
         {{post.title}}  
         {{post.content}}
@@ -22,7 +28,7 @@
 </ul>
     
 
-<form method="POST">
+<form id='postform' method="POST">
     <h3 align="center">Post</h3>
     <div class="form-group">
       <label for="content">content</label>
@@ -33,8 +39,9 @@
       <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter Title"
       />
     </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <br/>
+    <button type="submit" id='btn1' class="btn btn-primary">Submit</button>
+    <button type="submit" id='btn2' class="btn btn-primary">Post anonymous</button>
 </form>
 
 
