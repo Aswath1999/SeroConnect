@@ -19,3 +19,9 @@ class Post(db.Model):
     date=db.Column(db.DateTime(timezone=True), default=func.now())
     anonymous=db.Column(db.Boolean,nullable=False,default=False)
     owner=db.relationship('User',back_populates='Post')
+    
+class PostLike(db.Model):
+    __tablename__ = 'post_like'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
