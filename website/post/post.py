@@ -58,5 +58,3 @@ def anonymous():
         return redirect(url_for('views.forum'))
     return render_template("forum/forum.html",user=current_user,postuser=User,posts=post)
 
-p = Post.query.filter_by(id=1).first()
-p.likes.count()
