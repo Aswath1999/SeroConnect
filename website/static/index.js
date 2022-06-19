@@ -65,10 +65,10 @@ $(document).ready(function() {
         })
         e.preventDefault();
     })
-
+    $('.comments').css('display', 'none')
         // comment display ajax request
     $('.cmt').on('click', function(e) {
-        $('.comments').css('display', 'block')
+        $(this).children('div').show()
     })
 
 

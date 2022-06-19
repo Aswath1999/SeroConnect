@@ -1,8 +1,9 @@
-from flask import Blueprint,render_template,request,redirect,url_for
+from flask import Blueprint,render_template,request,redirect,url_for,jsonify
 from flask_login import login_required,current_user
 from ...decorators import check_confirmed
 from ...database.models import  Post,User,Comment
 from ... import db
+import json
 
 comments=Blueprint('comments',__name__)
 
@@ -50,6 +51,3 @@ def editcomment(commentid):
         db.session.commit()
         return redirect(url_for('views.forum'))
    
-# @comments.route('/comments/<postid>/<userid>/<commentid>',methods=['GET', 'POST'])
-# @login_required
-# @check_confirmed

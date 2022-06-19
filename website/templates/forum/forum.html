@@ -32,25 +32,26 @@
         <br>
         {{post.content}}
         <br>
-        <div class="cmt">View comments</div>
-        <div class="comments">
-          {% set comments=postcomment.query.filter(postcomment.post_id==post.id).all()%}
-          {%if comments%}
-            {%for comment in comments %}
-              <div>
-                {{comment.text}}
-                {%if comment.user_id==current_user.id%}
-                  <form action="{{ url_for('comments.deletecomment',commentid=comment.id) }}" method="post">
-                    <button class='deletecomment' type="submit">Delete</button>
-                  </form>
-                  <form action="{{ url_for('comments.editcomment',commentid=comment.id) }}" method="get">
-                    <button  type="submit">Edit</button>
-                  </form>
-                {%endif%}
-                <br>
-              </div>
-            {%endfor%}
-          {%endif%}
+        <div class="cmt" id="{{post.id}}">View comments
+          <div class="comments" >
+            {% set comments=postcomment.query.filter(postcomment.post_id==post.id).all()%}
+            {%if comments%}
+              {%for comment in comments %}
+                <div>
+                  {{comment.text}}
+                  {%if comment.user_id==current_user.id%}
+                    <form action="{{ url_for('comments.deletecomment',commentid=comment.id) }}" method="post">
+                      <button class='deletecomment' type="submit">Delete</button>
+                    </form>
+                    <form action="{{ url_for('comments.editcomment',commentid=comment.id) }}" method="get">
+                      <button  type="submit">Edit</button>
+                    </form>
+                  {%endif%}
+                  <br>
+                </div>
+              {%endfor%}
+            {%endif%}
+          </div>
         </div>
        
       </li>
