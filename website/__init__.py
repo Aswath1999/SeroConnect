@@ -14,11 +14,12 @@ db.init_app(app)
 from .views import views
 from .auth.auth import auth
 from .post.post import post
+from .post.comments.comments import comments
 
 app.register_blueprint(auth, url_prefix='/')
 app.register_blueprint(views, url_prefix='/')
 app.register_blueprint(post, url_prefix='/')
-
+app.register_blueprint(comments, url_prefix='/')
 
 
 

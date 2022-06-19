@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
+<form action="{{ url_for('comments.editcomment',commentid=comment.id) }}" method="POST">
+    <h3 align="center">Post</h3>
+    <div class="form-group">
+      <label for="comment">comment</label>
+      <textarea id="comment" name="comment" rows="4" cols="50">{{comment.text}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+{%endblock%}

@@ -41,6 +41,35 @@ $(document).ready(function() {
         document.getElementById("postform").submit();
     }
 
+    // Delete comments ajax
+    $('.deletecomment').on('click', function(e) {
+        var url=$(this).parent().prop('action');
+        var div=$(this).closest('div');
+        console.log(url)
+        $.ajax({
+            url:url,
+            type:'post',
+            contentType:'application/json',
+            success: function(response){
+                if (response) {
+                    div.fadeOut(1000, function(){ // **add this
+                        $(this).remove();
+                        console.log(response)
+                    });
+                }
+                else{
+                    console.log('failure')
+                }
+
+            }
+        })
+        e.preventDefault();
+    })
+
+        // comment display ajax request
+    $('.cmt').on('click', function(e) {
+        $('.comments').css('display', 'block')
+    })
 
 
 })

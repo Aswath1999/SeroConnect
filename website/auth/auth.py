@@ -59,12 +59,13 @@ def sign_up():
             html = render_template('auth/activate.html', confirm_url=confirm_url)
             subject = "Please confirm your email"
             send_email(user.email, subject, html)
-
-            # login_user(new_user, remember=True)
+                # login_user(new_user, remember=True)
             flash('Account created successfully',category='success')
             return redirect(url_for('auth.info'))
 
+
     return render_template('auth/signup.html',user=current_user)
+    
 
 @auth.route('/confirmation')
 def info():
