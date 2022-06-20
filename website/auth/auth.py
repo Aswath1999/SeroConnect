@@ -5,6 +5,7 @@ from flask_bcrypt import generate_password_hash,check_password_hash
 from ..email.token import generate_confirmation_token, confirm_token
 from ..email.mailer import send_email
 from flask_login import (login_user, logout_user, login_required, current_user)
+from ..forms.forms import SignupForm
 
 auth=Blueprint('auth',__name__)
 
@@ -31,40 +32,34 @@ def login():
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
-    if request.method=='POST':
-        username = request.form.get('Username')  
-        email = request.form.get('email')
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
+    form=SignupForm()
+    if request.method == 'POST':
+        if form.validate():
+            username = form.Username.data  
+            email = form.email.data
+            password = form.password.data
+            confirmpassword=form.confirmpassword.data
+            user= User.query.filter_by(email=email).first()
+            if user:
+                flash('Email already exists',category='error')
+                return '<h1>Email already exits<h1>'
+            else:
+                user = User(email=email, username=username, password=generate_password_hash(
+                    password),activation=False)
+                db.session.add(user)
+                db.session.commit()
 
-        user= User.query.filter_by(email=email).first()
-        if user:
-            flash('Email already exists',category='error')
-        elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif len(username) < 2:
-            flash('First name must be greater than 1 character.', category='error')
-        elif password1 != password2:
-            flash('Passwords don\'t match.', category='error')
-        elif len(password1) < 7:
-            flash('Password must be at least 7 characters.', category='error')
-        else:
-            user = User(email=email, username=username, password=generate_password_hash(
-                password1),activation=False)
-            db.session.add(user)
-            db.session.commit()
-
-            token = generate_confirmation_token(user.email)
-            confirm_url = url_for('auth.confirm_email', token=token, _external=True) #_external=True for absolute path
-            html = render_template('auth/activate.html', confirm_url=confirm_url)
-            subject = "Please confirm your email"
-            send_email(user.email, subject, html)
-                # login_user(new_user, remember=True)
-            flash('Account created successfully',category='success')
-            return redirect(url_for('auth.info'))
-
-
-    return render_template('auth/signup.html',user=current_user)
+                token = generate_confirmation_token(user.email)
+                confirm_url = url_for('auth.confirm_email', token=token, _external=True) #_external=True for absolute path
+                html = render_template('auth/activate.html', confirm_url=confirm_url)
+                subject = "Please confirm your email"
+                send_email(user.email, subject, html)
+                    # login_user(new_user, remember=True)
+                flash('Account created successfully',category='success')
+                return redirect(url_for('auth.info'))
+        errors = [{'field': key, 'messages': form.errors[key]} for key in form.errors.keys()] if form.errors else []
+        return render_template('auth/signup.html',form=form,user=current_user,errors=errors)
+    return render_template('auth/signup.html',form=form,user=current_user)
     
 
 @auth.route('/confirmation')
