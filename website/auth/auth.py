@@ -38,11 +38,10 @@ def sign_up():
             username = form.Username.data  
             email = form.email.data
             password = form.password.data
-            confirmpassword=form.confirmpassword.data
             user= User.query.filter_by(email=email).first()
             if user:
                 flash('Email already exists',category='error')
-                return '<h1>Email already exits<h1>'
+                return render_template('auth/signup.html',form=form,user=current_user)
             else:
                 user = User(email=email, username=username, password=generate_password_hash(
                     password),activation=False)
