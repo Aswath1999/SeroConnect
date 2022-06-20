@@ -5,30 +5,28 @@ from flask_bcrypt import generate_password_hash,check_password_hash
 from ..email.token import generate_confirmation_token, confirm_token
 from ..email.mailer import send_email
 from flask_login import (login_user, logout_user, login_required, current_user)
-from ..forms.forms import SignupForm
+from ..forms.forms import SignupForm,LoginForm
 
 auth=Blueprint('auth',__name__)
 
 @auth.route('/login',methods=['GET','POST'])
 def login():
+    form=LoginForm()
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-
+        email = form.email.data
+        password = form.password.data
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password, try again.', category='error')
-                print('Error')
+                return render_template("auth/login.html", user=current_user,form=form)
         else:
             flash('Email does not exist.', category='error')
-            print('Error')
-
-    return render_template("auth/login.html", user=current_user)
+            return render_template("auth/login.html", user=current_user,form=form)
+    return render_template("auth/login.html", user=current_user,form=form)
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
