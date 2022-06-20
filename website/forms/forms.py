@@ -13,3 +13,12 @@ class SignupForm(FlaskForm):
 class LoginForm(FlaskForm):
     email=EmailField('Email address',validators=[DataRequired(),Email('This field requires a valid email address.')])
     password=PasswordField('Enter your password',validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class ForgotForm(FlaskForm):
+    email=EmailField('Email address',validators=[DataRequired(),Email('This field requires a valid email address.')])
+    submit = SubmitField('Submit')
+
+class ResetForm(FlaskForm):
+    password=PasswordField('Enter your password',validators=[DataRequired(),Length(min=4,max=15)])
+    submit = SubmitField('Submit')

@@ -5,7 +5,7 @@ from flask_bcrypt import generate_password_hash,check_password_hash
 from ..email.token import generate_confirmation_token, confirm_token
 from ..email.mailer import send_email
 from flask_login import (login_user, logout_user, login_required, current_user)
-from ..forms.forms import SignupForm,LoginForm
+from ..forms.forms import SignupForm,LoginForm,ForgotForm,ResetForm
 
 auth=Blueprint('auth',__name__)
 
@@ -69,11 +69,9 @@ def confirm_email(token):
         email=confirm_token(token)
     except:
         flash('The confirmation link is invalid or has expired.', 'danger')
-        print('dangert')
     user = User.query.filter_by(email=email).first_or_404()
     if user.activation:
         flash('Account already confirmed. Please login.', 'success')
-        print('confirmed')
     else:
         user.activation = True
         db.session.add(user)
@@ -94,7 +92,7 @@ def unconfirmed():
     if current_user.activation:
         return redirect(url_for('views.home'))
     flash('Please confirm your account!', 'warning')
-    return render_template('auth/unconfirmed.html')
+    return render_template('auth/unconfirmed.html',user=current_user)
 
 @auth.route('/resend')
 @login_required
@@ -110,33 +108,37 @@ def resend_confirmation():
 
 @auth.route('/forgot',methods=['GET','POST'])
 def forgot():
-    if request.method == 'POST':
-        email=request.form.get('email')
+    form=ForgotForm()
+
+    if request.method == 'POST' and form.validate_on_submit:
+        email=form.email.data
         user=User.query.filter_by(email=email).first()
-        token=generate_confirmation_token(user.email)
-        db.session.commit()
-        reset_url = url_for('auth.resetpass', token=token, _external=True)
-        html=render_template('auth/resetpassword/reset.html',username=user.email,reset_url=reset_url,user=current_user)
-        subject = "Reset your password"
-        send_email(user.email, subject, html)
-        flash('A password reset email has been sent via email.', 'success')
-        return redirect(url_for("auth.info"))
-    return render_template('auth/resetpassword/forgot.html',user=current_user)
+        if user:
+            token=generate_confirmation_token(user.email)
+            db.session.commit()
+            reset_url = url_for('auth.resetpass', token=token, _external=True)
+            html=render_template('auth/resetpassword/reset.html',username=user.email,reset_url=reset_url,user=current_user)
+            subject = "Reset your password"
+            send_email(user.email, subject, html)
+            return redirect(url_for("auth.info"))
+        else:
+            flash('The email doesnot exist.', 'error')
+            return render_template('auth/resetpassword/forgot.html',user=current_user,form=form)
+    return render_template('auth/resetpassword/forgot.html',user=current_user,form=form)
 
 @auth.route('/resetpass/<token>', methods=['GET', 'POST'])
 def resetpass(token):
     email = confirm_token(token)
     user = User.query.filter_by(email=email).first_or_404()
-
+    form=ResetForm()
     if user:
         if request.method =='POST':
             user = User.query.filter_by(email=email).first()
             if user:
-                user.password=generate_password_hash(request.form.get('password'))
+                user.password=generate_password_hash(form.password.data)
                 db.session.commit()
                 login_user(user)
                 print('Sucess')
-                flash('Password successfully changed.', 'success')
                 return redirect(url_for('views.home'))
             else:
                 flash('Password change was unsuccessful.', 'danger')
@@ -144,7 +146,7 @@ def resetpass(token):
 
         else:
             flash('You can now change your password.', 'success')
-            return render_template('auth/resetpassword/resetpass.html',user=current_user)
+            return render_template('auth/resetpassword/resetpass.html',user=current_user,form=form)
     else:
         flash('Can not reset the password, try again.', 'danger')
 

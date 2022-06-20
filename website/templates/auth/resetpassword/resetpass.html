@@ -6,9 +6,8 @@
 <br />
 <form class="form-signin" role="form" method="post" action="">
     <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password"/>
+      {{form.password.label()}}
+      {{form.password(class='form-control')}}
     </div>
-  <button class="btn btn-success" type="submit">Reset your password</button>
-</form>
+    {{form.submit(class="btn btn-primary")}}
 {% endblock %}
