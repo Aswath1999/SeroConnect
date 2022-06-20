@@ -71,5 +71,9 @@ $(document).ready(function() {
         $(this).children('div').show()
     })
 
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+
 
 })
