@@ -16,7 +16,7 @@ db.init_app(app)
 # Image upload
 UPLOAD_FOLDER='static/images/'
 app.config['UPLOAD_FOLDER'] =UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 2*1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 2*1024*1024*10
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif','.jpeg']
 
     
