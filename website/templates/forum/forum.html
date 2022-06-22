@@ -18,6 +18,23 @@
         <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
           <button  id='editbtn' action="submit">Edit</button>
         </form>
+
+    <!-- Image display -->
+    <div class="images">
+      {% set images=postimage.query.filter(postimage.post_id==post.id).all()%}
+      {%if images%}
+      {%for image in images %}
+        <div class="image-display">
+          <img src="{{url_for('static',filename='images/'+image.image)}}" width="200" alt="">
+        </div>
+      {%endfor%}
+      {%endif%}
+      
+    </div>
+
+    <!-- End image display -->
+
+
         <form action="{{url_for('comments.createcomment',postid=post.id,userid=current_user.id)}}" method="POST">
           <div class="form-group">
             <label for="comment">comment</label>
