@@ -2,11 +2,10 @@ from flask import Blueprint,render_template,request,redirect, url_for,abort
 from flask_login import login_required,current_user
 from .decorators import check_confirmed
 from .database.models import Post,User,Comment,Image
-from . import db,basedir
+from . import db
 from website import app
-import os
-from werkzeug.utils import secure_filename
-import uuid as uuid
+from .post.images import createimage,deleteimage
+
 
 
 
@@ -31,19 +30,7 @@ def forum():
         db.session.commit()
         postid=post.id
         files = request.files.getlist("file")
-        if files:
-            for file in files:
-                filename=secure_filename(file.filename)
-                file_ext = os.path.splitext(filename)[1]
-                if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-                    pass
-                else:
-                    filename=str(uuid.uuid1())+"_"+filename
-                    file.save(os.path.join(basedir,app.config['UPLOAD_FOLDER'], filename))
-                    image=Image(image=filename,post_id=postid)
-                    db.session.add(image)
-                    db.session.commit()
-            return redirect(url_for('views.forum'))
-        return render_template("forum/forum.html",user=current_user,postuser=User,posts=post,postcomment=Comment,postimage=Image)
+        createimage(files,postid)
+        return redirect(url_for('views.forum'))
     return render_template("forum/forum.html",user=current_user,postuser=User,posts=post,postcomment=Comment,postimage=Image)
     

@@ -2,11 +2,10 @@ from flask import Blueprint,render_template,request,redirect,url_for
 from flask_login import login_required,current_user
 from ..decorators import check_confirmed
 from ..database.models import  Post,User,Image,Comment
-from werkzeug.utils import secure_filename
-from .. import db,basedir
+from .images import createimage,deleteimage
+from .. import db
 from website import app
-import uuid as uuid
-import os
+
 
 
 
@@ -42,7 +41,9 @@ def editpost(postid):
         title=request.form.get('Title')
         post.content=content
         post.title=title
-
+        deleteimage(postid)
+        files = request.files.getlist("file")
+        createimage(files,postid)
         db.session.commit()
         return redirect(url_for('views.forum'))
 
@@ -63,24 +64,8 @@ def anonymous():
         db.session.commit()
         postid=post.id
         files = request.files.getlist("file")
-        if files:
-            for file in files:
-                filename=secure_filename(file.filename)
-                file_ext = os.path.splitext(filename)[1]
-                if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-                    return f'Invalid image{filename}', 400
-                else:
-                    filename=str(uuid.uuid1())+"_"+filename
-                    file.save(os.path.join(basedir,app.config['UPLOAD_FOLDER'],filename))
-                    image=Image(image=filename,post_id=postid)
-                    db.session.add(image)
-                    db.session.commit()
-            return redirect(url_for('views.forum'))
+        createimage(files,postid)
+        return redirect(url_for('views.forum'))
     return render_template("forum/forum.html",user=current_user,postuser=User,posts=post,postcomment=Comment,postimage=Image)
 
 
-def deleteimage(postid):
-    images=Image.query.filter(Image.post_id==postid).all()
-    if images:
-        for image in images:
-            os.remove(os.path.join(basedir,app.config['UPLOAD_FOLDER'],image.image))
