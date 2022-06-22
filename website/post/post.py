@@ -11,7 +11,22 @@ from website import app
 
 post=Blueprint('post',__name__)
 
-
+@post.route('/forum/post',methods=['GET', 'POST'])
+@login_required
+@check_confirmed
+def createpost():
+    if request.method == 'POST':
+        title=request.form.get('Title')
+        content=request.form.get('content')
+        post = Post(title=title, content=content,user_id=current_user.id,anonymous=False)
+        db.session.add(post)
+        db.session.commit()
+        postid=post.id
+        files = request.files.getlist("file")
+        createimage(files,postid)
+        return redirect(url_for('views.forum'))
+    else:
+        return render_template('forum/post.html',user=current_user)
 
 @post.route('/post/<postid>',methods=['GET', 'POST'])
 @login_required

@@ -33,7 +33,7 @@ $(document).ready(function() {
 
     $(function() {
         $("#btn1").click(function() {
-          $(this).closest("form").attr('action', '/forum');
+          $(this).closest("form").attr('action', '/forum/post');
         });
     });
 
