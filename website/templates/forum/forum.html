@@ -60,7 +60,7 @@
 </ul>
     
 
-<form id='postform' method="POST">
+<form id='postform' method="POST" enctype="multipart/form-data">
     <h3 align="center">Post</h3>
     <div class="form-group">
       <label for="content">content</label>
@@ -71,6 +71,7 @@
       <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter Title"
       />
     </div>
+    <p><input type="file" name="file" multiple accept=".jpg, .png, .gif,.jpeg"></p>
     <br/>
     <button type="submit" id='btn1' class="btn btn-primary">Submit</button>
     <button type="submit" id='btn2' class="btn btn-primary">Post anonymous</button>

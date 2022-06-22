@@ -1,10 +1,17 @@
 from flask import Blueprint,render_template,request,redirect,url_for
 from flask_login import login_required,current_user
 from ..decorators import check_confirmed
-from ..database.models import  Post,User
-from .. import db
+from ..database.models import  Post,User,Image,Comment
+from werkzeug.utils import secure_filename
+from .. import db,basedir
+from website import app
+import os
+
+
 
 post=Blueprint('post',__name__)
+
+
 
 @post.route('/post/<postid>',methods=['GET', 'POST'])
 @login_required
@@ -55,6 +62,19 @@ def anonymous():
         post = Post(title=title, content=content,user_id=current_user.id,anonymous=True)
         db.session.add(post)
         db.session.commit()
+        db.session.add(post)
+        db.session.commit()
+        postid=post.id
+        files = request.files.getlist("file")
+        for file in files:
+            filename=secure_filename(file.filename)
+            file_ext = os.path.splitext(filename)[1]
+            if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+                return f'Invalid image{filename}', 400
+            else:
+                file.save(os.path.join(basedir,app.config['UPLOAD_FOLDER'],filename))
+                image=Image(image=filename,post_id=postid)
+                db.session.add(image)
+                db.session.commit()
         return redirect(url_for('views.forum'))
-    return render_template("forum/forum.html",user=current_user,postuser=User,posts=post)
-
+    return render_template("forum/forum.html",user=current_user,postuser=User,posts=post,postcomment=Comment)

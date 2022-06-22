@@ -2,8 +2,8 @@ import os
 from decouple import config
 
 # main config
-SECRET_KEY = 'my_precious'
-SECURITY_PASSWORD_SALT = 'my_precious_two'
+SECRET_KEY = 'nakflanfak'
+SECURITY_PASSWORD_SALT = 'mjknacjknfkjn'
 DEBUG = False
 BCRYPT_LOG_ROUNDS = 13
 WTF_CSRF_ENABLED = True
