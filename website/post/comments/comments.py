@@ -3,27 +3,23 @@ from flask_login import login_required,current_user
 from ...decorators import check_confirmed
 from ...database.models import  Post,User,Comment,Image
 from ... import db
-import json
+
 
 
 comments=Blueprint('comments',__name__)
 
-@comments.route('/comments/<postid>/<userid>',methods=['GET'])
+@comments.route('/comments/<postid>',methods=['GET'])
 @login_required
 @check_confirmed
-def show_comments(postid,userid):
-    comments=Comment.query.filter(Comment.post_id==postid).all()
-    owncomments=[]
-    othercomments=[]
-    for comment in comments:
-        if comment.user_id==userid:
-            owncomments.append(comment.text)
-
-        else:
-            othercomments.append(comment.text)
-    return json.dumps({'usercomments':owncomments,'comments':othercomments})
-
-
+def show_comments(postid):
+    page=request.args.get('page',1,type=int)
+    comments=Comment.query.filter(Comment.post_id==postid).order_by(Comment.id.desc()).paginate(page=page,per_page=3)
+    post=Post.query.filter_by(id=postid).first()
+    if "hx_request"  in request.headers:
+        return render_template("forum/showcomments.html",comments=comments,postuser=User,user=current_user,post=post,postimage=Image)
+    return render_template("forum/comments.html",comments=comments,postuser=User,user=current_user,post=post,postimage=Image)
+    
+    
 @comments.route('/comments/create/<postid>/<userid>',methods=['GET', 'POST'])
 @login_required
 @check_confirmed

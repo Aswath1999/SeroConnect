@@ -25,7 +25,7 @@ def createpost():
         createimage(files,postid)
         return redirect(url_for('views.forum'))
     else:
-        return render_template('forum/post.html',user=current_user)
+        return render_template('forum/createpost.html',user=current_user)
 
 @post.route('/post/<postid>',methods=['GET', 'POST'])
 @login_required

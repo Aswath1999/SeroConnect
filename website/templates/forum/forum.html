@@ -4,89 +4,11 @@
 <a href="{{url_for('post.createpost')}}">Create post</a>
 
 <!-- ======================================Post display===================================== -->
-<ul>  
-    {%for post in posts.items%}
-    <li> 
-      {% if post.anonymous==False %}
-        <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
-      {%else%}
-        <h3>Anonymous</h3>
-      {%endif%}
 
-      {% if post.user_id==user.id%}
-        <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
-          <button class='deletebtn' action="submit">Delete {{post.id}}</button>
-        </form>
-        <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
-          <button  id='editbtn' action="submit">Edit</button>
-        </form>
-
-    <!-- Image display -->
-    <div class="images">
-      {% set images=postimage.query.filter(postimage.post_id==post.id).all()%}
-      {%if images%}
-      {%for image in images %}
-        <div class="image-display">
-          <img src="{{url_for('static',filename='images/'+image.image)}}" width="200" alt="">
-        </div>
-      {%endfor%}
-      {%endif%}
-      
-    </div>
-
-    <!-- End image display -->
+{% include 'forum/viewpost.html' %}
 
 
-        <form action="{{url_for('comments.createcomment',postid=post.id,userid=current_user.id)}}" method="POST">
-          <div class="form-group">
-            <label for="comment">comment</label>
-            <textarea id="comment" name="comment" rows="2" cols="30"></textarea>
-            <button action="submit">comment</button>
-          </div>
-          
-        </form>
-      {% endif %}
-        {{post.id}}
-        {{post.title}}  
-        <br>
-        {{post.content}}
-        <br>
-        <div class="cmt" id="{{post.id}}">View comments
-          <div class="comments" >
-            {% set comments=postcomment.query.filter(postcomment.post_id==post.id).all()%}
-            {%if comments%}
-              {%for comment in comments %}
-                <div>
-                  {{comment.text}}
-                  {%if comment.user_id==current_user.id%}
-                    <form action="{{ url_for('comments.deletecomment',commentid=comment.id) }}" method="post">
-                      <button class='deletecomment' type="submit">Delete</button>
-                    </form>
-                    <form action="{{ url_for('comments.editcomment',commentid=comment.id) }}" method="get">
-                      <button  type="submit">Edit</button>
-                    </form>
-                  {%endif%}
-                  <br>
-                </div>
-              {%endfor%}
-            {%endif%}
-          </div>
-        </div>
-       
-      </li>
-    {%endfor%}
-</ul>
 <!-- ======================================End of Post display===================================== -->
-  {%for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2)%}
-  {%if page_num%}
-    {%if posts.page==page_num%}
-    <a class="btn btn-info mb-4" post" href="{{url_for('views.forum',page=page_num)}}">{{page_num}}</a>
-    {%else%}
-      <a class="btn btn-outline-info mb-4" post" href="{{url_for('views.forum',page=page_num)}}">{{page_num}}
-    {%endif%}
-  {%else%}
-  ...
-  {%endif%}
+{%endblock%}
 
-  {%endfor%}
-{% endblock %}
+
