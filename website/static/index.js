@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     $('.deletebtn').on('click', function(e) {
         var url=$(this).parent().prop('action');
-        var li=$(this).closest('li');
+        var section=$(this).closest('section');
         console.log(url)
         $.ajax({
             url:url,
@@ -11,7 +11,7 @@ $(document).ready(function() {
             contentType:'application/json',
             success: function(response){
                 if (response) {
-                    li.fadeOut(1000, function(){ // **add this
+                    section.fadeOut(1000, function(){ // **add this
                         $(this).remove();
                         console.log(response)
                     });
@@ -37,10 +37,7 @@ $(document).ready(function() {
         });
     });
 
-    function myFunction() {
-        document.getElementById("postform").submit();
-    }
-
+ 
     // Delete comments ajax
     $('.deletecomment').on('click', function(e) {
         var url=$(this).parent().prop('action');
