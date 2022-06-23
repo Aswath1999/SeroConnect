@@ -1,11 +1,10 @@
-from flask import Blueprint,render_template,request,redirect,url_for
+from flask import Blueprint,render_template,request,redirect,url_for,make_response,jsonify
 from flask_login import login_required,current_user
 from ..decorators import check_confirmed
 from ..database.models import  Post,User,Image,Comment
 from .images import createimage,deleteimage
 from .. import db
 from website import app
-
 
 
 
@@ -82,5 +81,3 @@ def anonymous():
         createimage(files,postid)
         return redirect(url_for('views.forum'))
     return render_template("forum/forum.html",user=current_user,postuser=User,posts=post,postcomment=Comment,postimage=Image)
-
-

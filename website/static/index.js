@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    console.log()
-    
+    console.log()   
+
     $('.deletebtn').on('click', function(e) {
         var url=$(this).parent().prop('action');
         var li=$(this).closest('li');
@@ -65,6 +65,8 @@ $(document).ready(function() {
         })
         e.preventDefault();
     })
+
+
     $('.comments').css('display', 'none')
         // comment display ajax request
     $('.cmt').on('click', function(e) {
@@ -74,6 +76,6 @@ $(document).ready(function() {
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
     }
-
+    
 
 })

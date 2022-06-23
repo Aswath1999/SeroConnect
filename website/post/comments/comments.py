@@ -1,14 +1,30 @@
 from flask import Blueprint,render_template,request,redirect,url_for,jsonify
 from flask_login import login_required,current_user
 from ...decorators import check_confirmed
-from ...database.models import  Post,User,Comment
+from ...database.models import  Post,User,Comment,Image
 from ... import db
 import json
 
+
 comments=Blueprint('comments',__name__)
 
+@comments.route('/comments/<postid>/<userid>',methods=['GET'])
+@login_required
+@check_confirmed
+def show_comments(postid,userid):
+    comments=Comment.query.filter(Comment.post_id==postid).all()
+    owncomments=[]
+    othercomments=[]
+    for comment in comments:
+        if comment.user_id==userid:
+            owncomments.append(comment.text)
 
-@comments.route('/comments/<postid>/<userid>',methods=['GET', 'POST'])
+        else:
+            othercomments.append(comment.text)
+    return json.dumps({'usercomments':owncomments,'comments':othercomments})
+
+
+@comments.route('/comments/create/<postid>/<userid>',methods=['GET', 'POST'])
 @login_required
 @check_confirmed
 def createcomment(postid,userid):

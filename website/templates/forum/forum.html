@@ -5,7 +5,7 @@
 
 <!-- ======================================Post display===================================== -->
 <ul>  
-    {%for post in posts%}
+    {%for post in posts.items%}
     <li> 
       {% if post.anonymous==False %}
         <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
@@ -77,7 +77,16 @@
     {%endfor%}
 </ul>
 <!-- ======================================End of Post display===================================== -->
+  {%for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2)%}
+  {%if page_num%}
+    {%if posts.page==page_num%}
+    <a class="btn btn-info mb-4" post" href="{{url_for('views.forum',page=page_num)}}">{{page_num}}</a>
+    {%else%}
+      <a class="btn btn-outline-info mb-4" post" href="{{url_for('views.forum',page=page_num)}}">{{page_num}}
+    {%endif%}
+  {%else%}
+  ...
+  {%endif%}
 
-
+  {%endfor%}
 {% endblock %}
-

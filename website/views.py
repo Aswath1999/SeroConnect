@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,request,redirect, url_for,abort
+from flask import Blueprint,render_template,request
 from flask_login import login_required,current_user
 from .decorators import check_confirmed
 from .database.models import Post,User,Comment,Image
@@ -21,7 +21,8 @@ def home():
 @login_required
 @check_confirmed
 def forum():
-    post=Post.query.all()
+    page=request.args.get('page',1,type=int)
+    post=Post.query.order_by(Post.date.desc()).paginate(page=page,per_page=2)
     return render_template("forum/forum.html",user=current_user,postuser=User,posts=post,postcomment=Comment,postimage=Image)
     # if request.method == 'POST':
     #     title=request.form.get('Title')
