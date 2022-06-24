@@ -159,14 +159,17 @@ div.title{
   background: none;
   position: absolute;
   top: 10px;
-  left: 370%;
+  left: 260%;
 }
 #editbtn{
-  left: 340%;
+  left: 240%;
   
 }
 .name{
-  width: 140px;
+  width: 200px;
+}
+.name i{
+  padding-right: 10px;
 }
 
 
@@ -180,4 +183,11 @@ div.title{
   font-size: 1.5em;
   -webkit-text-stroke: 0.8px;
   color: #3366ff;
+}
+.btnoutline.editbtn:hover i{
+  color:rgb(2, 2, 2);
+}
+
+.btnoutline.deletebtn:hover i{
+  color: rgb(170, 43, 43);
 }

@@ -8,9 +8,9 @@
       <div class="posthead">
         <div class="name">
           {% if post.anonymous==False %}
-          <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
+          <h3> <i class="bi bi-person-circle"></i>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
           {%else%}
-          <h3>Anonymous</h3>
+          <h3> <i class="bi bi-person-circle"></i>Anonymous</h3>
           {%endif%}
        </div>
       
@@ -19,7 +19,7 @@
           <button class='deletebtn btnoutline' action="submit"><i class="bi bi-archive"></i></button>
         </form>
         <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
-          <button id='editbtn' class="btnoutline" action="submit"><i class="bi bi-pencil-fill"></i></button>
+          <button id='editbtn' class="btnoutline editbtn" action="submit"><i class="bi bi-pencil-fill"></i></button>
         </form>
       </div>
         {%endif%}
