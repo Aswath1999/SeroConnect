@@ -36,3 +36,4 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     post = db.relationship("Post", back_populates="comments")
+    date=db.Column(db.DateTime(timezone=True), default=func.now())

@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-
+from flask_migrate import Migrate
 
 basedir=path.abspath(path.dirname(__file__))
 
@@ -13,6 +13,8 @@ app=Flask(__name__)
 app.secret_key=app.config['SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 db.init_app(app)
+migrate = Migrate(app, db)
+
 # Image upload
 UPLOAD_FOLDER='static/images/'
 app.config['UPLOAD_FOLDER'] =UPLOAD_FOLDER
