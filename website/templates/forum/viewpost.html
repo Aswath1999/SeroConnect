@@ -13,10 +13,10 @@
     
       {% if post.user_id==user.id%}
       <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
-        <button class='deletebtn' action="submit">Delete</button>
+        <button class='deletebtn btnoutline' action="submit">Delete<i class="bi bi-archive"></i></button>
       </form>
       <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
-        <button id='editbtn' action="submit">Edit</button>
+        <button id='editbtn' class="btnoutline" action="submit">Edit</button>
       </form>
 
       <div class="title">
