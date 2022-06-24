@@ -5,19 +5,24 @@
   <div>
     {%endif%}
     <section class="post offset-md-3">
-      {% if post.anonymous==False %}
-      <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
-      {%else%}
-      <h3>Anonymous</h3>
-      {%endif%}
-    
-      {% if post.user_id==user.id%}
-      <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
-        <button class='deletebtn btnoutline' action="submit">Delete<i class="bi bi-archive"></i></button>
-      </form>
-      <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
-        <button id='editbtn' class="btnoutline" action="submit">Edit</button>
-      </form>
+      <div class="posthead">
+        <div class="name">
+          {% if post.anonymous==False %}
+          <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
+          {%else%}
+          <h3>Anonymous</h3>
+          {%endif%}
+       </div>
+      
+        {% if post.user_id==user.id%}
+        <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
+          <button class='deletebtn btnoutline' action="submit"><i class="bi bi-archive"></i></button>
+        </form>
+        <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
+          <button id='editbtn' class="btnoutline" action="submit"><i class="bi bi-pencil-fill"></i></button>
+        </form>
+      </div>
+        {%endif%}
 
       <div class="title">
         {{post.title}}
@@ -31,7 +36,7 @@
           <img src="{{url_for('static',filename='images/'+image.image)}}"  alt="">
         </div>
         {%endfor%}
-        {%endif%}
+     
       </div>
 
       <!-- End image display -->

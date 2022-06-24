@@ -1,21 +1,30 @@
 {% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
-<section class="post offset-md-3">
-  {% if post.anonymous==False %}
-  <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
-  {%else%}
-  <h3>Anonymous</h3>
-  {%endif%}
+<a href="{{url_for('post.createpost')}}">Create post</a>
 
-  {% if post.user_id==user.id%}
-  <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
-    <button class='deletebtn btnoutline' action="submit">Delete</button>
-  </form>
-  <form action="{{ url_for('post.editpost',postid=post.id) }}"  method="GET">
-    <button id='editbtn' class="btnoutline" action="submit">Edit</button>
-  </form>
-  {%endif%}
+<section class="post offset-md-3">
+      <div class="posthead">
+        <div class="name">
+          {% if post.anonymous==False %}
+          <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
+          {%else%}
+          <h3>Anonymous</h3>
+          {%endif%}
+        </div>
+      
+        {% if post.user_id==user.id%}
+        <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
+          <button class='deletebtn btnoutline' action="submit"><i class="bi bi-archive"></i></button>
+        </form>
+        <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
+          <button id='editbtn' class="btnoutline" action="submit"><i class="bi bi-pencil-fill"></i></button>
+        </form>
+      </div>
+      {%endif%}
   <div>
-    {{post.title}}
+    <div class="title">
+      {{post.title}}
+    </div>
+ 
     <div class="images">
       {% set images=postimage.query.filter(postimage.post_id==post.id).all()%}
       {%if images%}

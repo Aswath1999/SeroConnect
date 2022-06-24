@@ -13,7 +13,7 @@ comments=Blueprint('comments',__name__)
 @check_confirmed
 def show_comments(postid):
     page=request.args.get('page',1,type=int)
-    comments=Comment.query.filter(Comment.post_id==postid).order_by(Comment.id.desc()).paginate(page=page,per_page=3)
+    comments=Comment.query.filter(Comment.post_id==postid).order_by(Comment.date.desc()).paginate(page=page,per_page=3)
     post=Post.query.filter_by(id=postid).first()
     if "hx_request"  in request.headers:
         return render_template("forum/showcomments.html",comments=comments,postuser=User,user=current_user,post=post,postimage=Image)
