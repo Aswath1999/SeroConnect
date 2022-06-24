@@ -1,6 +1,6 @@
 $(document).ready(function() {
     console.log()   
-
+// Ajax for deleting posts
     $('.deletebtn').on('click', function(e) {
         var url=$(this).parent().prop('action');
         var section=$(this).closest('section');
@@ -24,6 +24,29 @@ $(document).ready(function() {
         })
         e.preventDefault();
     })
+// Ajax for creating comments
+$('#createcomment').on('click', function(e) {
+    let url=$('.createcommentform').prop('action');
+    $.ajax({
+        url:url,
+        type:'post',
+        dataType: "json",
+        data:JSON.stringify({
+            data: $('#commenttext').val()
+        }),
+        contentType: "application/json",
+        success: function(response){
+            if(response){
+                location.reload();
+            }
+        },
+        error: function(e) {
+            console.log(e);
+        },
+    })
+    e.preventDefault();
+})
+
 
     $(function() {
         $("#btn2").click(function() {

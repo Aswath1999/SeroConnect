@@ -27,11 +27,11 @@
         {%endif%}
     </div>
     {{post.content}}
-    <form action="{{url_for('comments.createcomment',postid=post.id,userid=current_user.id)}}" method="POST">
+    <form action="{{url_for('comments.createcomment',postid=post.id,userid=current_user.id)}}" method="POST" class="createcommentform">
         <div class="form-group">
           <label for="comment">comment</label>
-          <textarea id="comment" name="comment" rows="2" cols="30"></textarea>
-          <button action="submit">comment</button>
+          <textarea id="commenttext" name="comment" rows="2" cols="30"></textarea>
+          <button id="createcomment" action="submit">comment</button>
         </div>
     </form>
     {% include 'forum/showcomments.html' %}

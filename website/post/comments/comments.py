@@ -3,7 +3,7 @@ from flask_login import login_required,current_user
 from ...decorators import check_confirmed
 from ...database.models import  Post,User,Comment,Image
 from ... import db
-
+import json
 
 
 comments=Blueprint('comments',__name__)
@@ -24,15 +24,14 @@ def show_comments(postid):
 @login_required
 @check_confirmed
 def createcomment(postid,userid):
-    post = Post.query.filter_by(id=postid).first()
-    if request.method == 'POST':
-        text=request.form.get('comment')
-        if text:
-            comment = Comment(text=text,user_id=userid,post_id=postid)
-            db.session.add(comment)
-            db.session.commit()
-            return redirect(url_for('views.forum'))
-        return redirect(url_for('views.forum'))
+    post = Post.query.filter_by(id=postid).first()    
+    text=json.loads(request.data).get('data')
+    if text:
+        comment = Comment(text=text,user_id=userid,post_id=postid)
+        db.session.add(comment)
+        db.session.commit()
+        return jsonify({'success':'sucess'})
+
         
 
 @comments.route('/comments/<commentid>',methods=['GET', 'POST'])
