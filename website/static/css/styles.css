@@ -4,7 +4,7 @@
 body  {  
   background: #ccccff;
   font-family: 'Roboto', sans-serif;
-  text-transform:uppercase;
+  /* text-transform:uppercase; */
   text-shadow: .5px .5px 0#CCCCCC;
 }
 
@@ -133,3 +133,20 @@ li a.title:hover{
 /*==================================================== Navbar End =======================================================*/
 
 /* ====================================================== home page card Start  ============================================*/
+
+/* ====================================================== Post design start  ============================================*/
+section.post{
+  width:50%;
+}
+.image-display img{
+  width:100%;
+  height:100%;
+  padding-bottom: 2px;
+}
+
+div.title{
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  
+  padding-bottom:3px;
+}

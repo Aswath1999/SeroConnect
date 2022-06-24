@@ -4,28 +4,31 @@
   {% else %}
   <div>
     {%endif%}
-    <section>
+    <section class="post offset-md-3">
       {% if post.anonymous==False %}
       <h3>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
       {%else%}
       <h3>Anonymous</h3>
       {%endif%}
-
+    
       {% if post.user_id==user.id%}
       <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
-        <button class='deletebtn' action="submit">Delete {{post.id}}</button>
+        <button class='deletebtn' action="submit">Delete</button>
       </form>
       <form action="{{ url_for('post.editpost',postid=post.id) }}" method="GET">
         <button id='editbtn' action="submit">Edit</button>
       </form>
 
+      <div class="title">
+        {{post.title}}
+      </div>
       <!-- Image display -->
       <div class="images">
         {% set images=postimage.query.filter(postimage.post_id==post.id).all()%}
         {%if images%}
         {%for image in images %}
         <div class="image-display">
-          <img src="{{url_for('static',filename='images/'+image.image)}}" width="200" alt="">
+          <img src="{{url_for('static',filename='images/'+image.image)}}"  alt="">
         </div>
         {%endfor%}
         {%endif%}
@@ -33,8 +36,7 @@
 
       <!-- End image display -->
       {% endif %}
-      {{post.id}}
-      {{post.title}}
+     
       <br>
       {{post.content}}
       <br>

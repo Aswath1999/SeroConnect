@@ -53,10 +53,10 @@ def editpost(postid):
     else:
         content=request.form.get('content')
         title=request.form.get('Title')
+        files = request.files.getlist("file")
         post.content=content
         post.title=title
         deleteimage(postid)
-        files = request.files.getlist("file")
         createimage(files,postid)
         db.session.commit()
         return redirect(url_for('views.forum'))
