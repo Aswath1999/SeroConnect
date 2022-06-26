@@ -58,7 +58,7 @@ li a:hover .circle {
 
 li i{
   height: 70px;
-  -webkit-text-stroke: -10px;
+  -webkit-text-stroke: 0px;
 }
 
 li a:hover i {
