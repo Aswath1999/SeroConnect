@@ -60,5 +60,5 @@ def editcomment(commentid):
         text=request.form.get('comment')
         comment.text=text
         db.session.commit()
-        return redirect(url_for('views.forum'))
+        return redirect(url_for('comments.show_comments',postid=comment.post_id,userid=current_user.id))
    

@@ -11,7 +11,7 @@ $(document).ready(function() {
             contentType:'application/json',
             success: function(response){
                 if (response) {
-                    section.fadeOut(1000, function(){ // **add this
+                    section.fadeOut(500, function(){ // **add this
                         $(this).remove();
                         console.log(response)
                     });
@@ -72,7 +72,7 @@ $('#createcomment').on('click', function(e) {
             contentType:'application/json',
             success: function(response){
                 if (response) {
-                    div.fadeOut(1000, function(){ // **add this
+                    div.fadeOut(500, function(){ // **add this
                         $(this).remove();
                         console.log(response)
                     });
@@ -87,7 +87,7 @@ $('#createcomment').on('click', function(e) {
     })
 
 
-    $('.comments').css('display', 'none')
+    // $('.comments').css('display', 'none')
         // comment display ajax request
     $('.cmt').on('click', function(e) {
         $(this).children('div').show()
