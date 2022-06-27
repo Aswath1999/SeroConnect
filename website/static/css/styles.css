@@ -213,7 +213,9 @@ div.title{
   height: 170px;
 }
 
-.alert{
-  background-color:green;
-  opacity:0.7;
+.name img{
+  width: 24px;
+  height: 24px;
+  border-radius:50%;
+  padding-right: 3px;
 }
