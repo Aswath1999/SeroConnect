@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
+
+<section class="Profile col-md-12">
+    {%if current_user.userimage%}
+    <div class="profileimage col-md-6"><img src="{{url_for('static',filename='images/User/'+current_user.userimage)}}"alt="Userimage"></div>
+    {%else%}
+    <div class="profileimage col-md-6"><img src="{{url_for('static',filename='images/User/default_avatar.png')}}" alt="Userimage"></div>
+    {%endif%}
+    <div class="username col-md-6">Name: {{current_user.username}}</div>
+    <div class="email col-md-6">Email: {{current_user.email}}</div>
+    <a href="{{url_for('views.profileinfo')}}">Edit Profile info</a>
+</section>
+<div class="Userposts">
+    {% include 'forum/viewpost.html' %}
+</div>
+
+
+{%endblock%}

@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %} {% if category ==
+        'error' %}
+        <div class="alert alert-danger alter-dismissable fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+    <div class="form-group">
+        <label for="Username">Username</label>
+        <input type="text" class="form-control" id="Username" name="Username" value="{{current_user.username}}" placeholder="Enter Username"
+        />
+    </div>
+    <p><input type="file" name="file" multiple accept=".jpg, .png, .gif,.jpeg"></p>
+    <button type="submit">Update</button>
+</form>
+
+
+{%endblock%}

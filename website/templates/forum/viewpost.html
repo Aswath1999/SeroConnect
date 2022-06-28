@@ -8,7 +8,11 @@
       <div class="posthead">
         <div class="name">
           {% if post.anonymous==False %}
-          <h3> <i class="bi bi-person-circle"></i>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
+            {%if postuser.query.filter_by(id=post.user_id).first().userimage%}
+             <h3> <img src="{{url_for('static',filename='images/User/'+postuser.query.filter_by(id=post.user_id).first().userimage)}}">{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
+            {%else%}
+             <h3> <i class="bi bi-person-circle"></i>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
+            {%endif%}
           {%else%}
           <h3> <i class="bi bi-person-circle"></i>Anonymous</h3>
           {%endif%}

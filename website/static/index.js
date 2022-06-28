@@ -89,9 +89,9 @@ $('#createcomment').on('click', function(e) {
 
     // $('.comments').css('display', 'none')
         // comment display ajax request
-    $('.cmt').on('click', function(e) {
-        $(this).children('div').show()
-    })
+    // $('.cmt').on('click', function(e) {
+    //     $(this).children('div').show()
+    // })
 
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
