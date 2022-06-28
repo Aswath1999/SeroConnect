@@ -64,6 +64,12 @@ def profileinfo():
                 db.session.commit()
                 return render_template('profile.html',user=current_user,posts=posts,postuser=User,postcomment=Comment,postimage=Image)
             return render_template('profile.html',user=current_user,posts=posts,postuser=User,postcomment=Comment,postimage=Image)
+
+@views.route('/podcast',methods=['GET'])
+@login_required
+@check_confirmed
+def podcast():
+    return render_template('podcast.html',user=current_user)
         
             
 

@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900,400italic,700italic,900italic'); 
 
 
-body  {  
+body{  
   background: #ccccff;
   font-family: 'Roboto', sans-serif;
   /* text-transform:uppercase; */
@@ -417,7 +417,7 @@ p{
   width: 250px;
   height: 350px;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   background: linear-gradient(#ff5252, #b33939);
   transition:.6s;
   
