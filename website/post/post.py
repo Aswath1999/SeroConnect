@@ -9,7 +9,7 @@ from website import app
 
 
 post=Blueprint('post',__name__)
-
+# To create posts and saves to database
 @post.route('/forum/post',methods=['GET', 'POST'])
 @login_required
 @check_confirmed
@@ -27,6 +27,7 @@ def createpost():
     else:
         return render_template('forum/createpost.html',user=current_user)
 
+# Deletes posts asyncronously with the help of AJAX requests
 @post.route('/post/<postid>',methods=['GET', 'POST'])
 @login_required
 @check_confirmed
@@ -43,6 +44,7 @@ def deletepost(postid):
     else:
         return 'Failure'
 
+# Edits information on the posts
 @post.route('/post/edit/<postid>',methods=['GET', 'POST'])
 @login_required
 @check_confirmed
@@ -62,7 +64,7 @@ def editpost(postid):
         return redirect(url_for('views.forum'))
 
 
-   
+#  the anonymous function is used to create posts anonymously  
 @post.route('/anonymous',methods=['GET', 'POST'])
 @login_required
 @check_confirmed

@@ -3,7 +3,7 @@ from website import app
 
 mail= Mail(app)
 
-
+# sends verification email to the user's registered email address.
 def send_email(to, subject, template):
     msg = Message(
         subject,

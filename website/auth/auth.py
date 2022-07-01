@@ -9,6 +9,7 @@ from ..forms.forms import SignupForm,LoginForm,ForgotForm,ResetForm
 
 auth=Blueprint('auth',__name__)
 
+# verifies login information of the user
 @auth.route('/login',methods=['GET','POST'])
 def login():
     form=LoginForm()
@@ -28,6 +29,8 @@ def login():
             return render_template("auth/login.html", user=current_user,form=form)
     return render_template("auth/login.html", user=current_user,form=form)
 
+
+# returns new user's information to the database.
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     form=SignupForm()
@@ -58,11 +61,12 @@ def sign_up():
         return render_template('auth/signup.html',form=form,user=current_user,errors=errors)
     return render_template('auth/signup.html',form=form,user=current_user)
     
-
+# returns sucess page on successful verification or registration
 @auth.route('/confirmation')
 def info():
     return render_template('auth/info.html',user=current_user)
 
+# used to verify the user from the verification link sent to the user's email address.
 @auth.route('/confirm/<token>')
 def confirm_email(token):
     try:    
@@ -80,12 +84,14 @@ def confirm_email(token):
         flash('You have confirmed your account. Thanks!', 'success')
     return redirect(url_for('views.home'))
 
+# Logs out the user
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
+# returns unconfirmed page when the user's account is not activated
 @auth.route('/unconfirmed')
 @login_required
 def unconfirmed():
@@ -94,6 +100,7 @@ def unconfirmed():
     flash('Please confirm your account!', 'warning')
     return render_template('auth/unconfirmed.html',user=current_user)
 
+# to resend confirmation email to the user
 @auth.route('/resend')
 @login_required
 def resend_confirmation():
@@ -105,7 +112,7 @@ def resend_confirmation():
     flash('A new confirmation email has been sent.', 'success')
     return redirect(url_for('auth.unconfirmed'))
 
-
+# To change passwords and send password reset link.
 @auth.route('/forgot',methods=['GET','POST'])
 def forgot():
     form=ForgotForm()
@@ -126,6 +133,7 @@ def forgot():
             return render_template('auth/resetpassword/forgot.html',user=current_user,form=form)
     return render_template('auth/resetpassword/forgot.html',user=current_user,form=form)
 
+# Resets the password from the link sent to the user.
 @auth.route('/resetpass/<token>', methods=['GET', 'POST'])
 def resetpass(token):
     email = confirm_token(token)
