@@ -37,4 +37,7 @@ mental health and advices the user on how they can handle their problems better.
 - Create a .env file. Setup email configurations in config.py and variables in .env file.
 - SeroConnect has gmail configurations. To set it up quickly, create variables `GMAIL=Your Gmail` and  `PASSWORD=Your password` in your .env file. Generate app password from gmail if you have two-factor verification setup.
 - Run main.py to run the application
-
+## Collaborators
+ - Gokulvasan https://github.com/gkvzn
+## Licensing
+MIT
