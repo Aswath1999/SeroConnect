@@ -8,7 +8,7 @@ mental health and advices the user on how they can handle their problems better.
 ### IDE
 - Visual Studio Code
 ### Frontend
-- HTML5,CSS3 And JavaScript
+- HTML5, CSS3 And JavaScript
 - Bootstrap 5
 - jQuery
 - htmx
