@@ -5,17 +5,17 @@ would have wished to have someone to talk to or just a confirmation that we are 
 It provides users with a forum that enables them to talk about their problems freely and even anonymously. SeroConnect has podcasts and videos that speaks about 
 mental health and advices the user on how they can handle their problems better. 
 ## Technologies
-###Frontend
+### Frontend
 - Bootstrap 5
 - jQuery
 - htmx
-###Backend
+### Backend
 - Python
 - Flask- A Python Micro-Framework
 - SqlAlchemy for creating and updating database
 - Other packages can be found in the requirements.txt file
 
-##Features
+## Features
 - CRUD (Create/Read/Update/Delete) on Posts by users
 - CRUD (Create/Read/Update/Delete) on Comments by users
 - Anonymous posts by users
@@ -25,5 +25,10 @@ mental health and advices the user on how they can handle their problems better.
 - Pagination on comments with infinite scrolling
 
 ## Getting started
+- Clone the project from Github  
+`https://github.com/Aswath1999/SeroConnect.git`
+- Create virtual environment
+`virtualenv venv`
+`venv/bin/activate`
 After cloning the project, it is necassary to install all the dependencies. Create a virtual environment and install the dependencies with the 
 command `pip install -r requirements.txt`. 
