@@ -21,7 +21,7 @@ mental health and advices the user on how they can handle their problems better.
 - Anonymous posts by users
 - Registration with confirmation emails
 - Reset password emails
-- Pagination on posts with infinite scrolling
+- Pagination on posts with Flask-paginate and infinite scrolling with htmx requests
 - Pagination on comments with infinite scrolling
 
 ## Getting started
