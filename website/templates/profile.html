@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
 
+<!-- Profile information of the user -->
 <section class="Profile col-md-12">
     {%if current_user.userimage%}
     <div class="profileimage col-md-6"><img src="{{url_for('static',filename='images/User/'+current_user.userimage)}}"alt="Userimage"></div>
@@ -11,6 +12,7 @@
     <a href="{{url_for('views.profileinfo')}}">Edit Profile info</a>
 </section>
 <div class="Userposts">
+    <!-- inclusdes the viewpost.html when a htmx request is sent. Htmx library is used -->
     {% include 'forum/viewpost.html' %}
 </div>
 

@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
+<!-- form to edit comments -->
 <form action="{{ url_for('comments.editcomment',commentid=comment.id) }}" method="POST">
     <h3 align="center">Post</h3>
     <div class="form-group">

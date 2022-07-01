@@ -47,7 +47,7 @@ $('#createcomment').on('click', function(e) {
     e.preventDefault();
 })
 
-
+    // submits form info to the link based on button click.
     $(function() {
         $("#btn2").click(function() {
           $(this).closest("form").attr('action', '/anonymous');
@@ -61,7 +61,7 @@ $('#createcomment').on('click', function(e) {
     });
 
  
-    // Delete comments ajax
+    // Ajax request for deleing comments
     $('.deletecomment').on('click', function(e) {
         var url=$(this).parent().prop('action');
         var div=$(this).closest('div');
@@ -86,13 +86,7 @@ $('#createcomment').on('click', function(e) {
         e.preventDefault();
     })
 
-
-    // $('.comments').css('display', 'none')
-        // comment display ajax request
-    // $('.cmt').on('click', function(e) {
-    //     $(this).children('div').show()
-    // })
-
+// prevents submitting the form twice on reload
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
     }

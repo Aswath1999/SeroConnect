@@ -4,6 +4,7 @@
 
 <h1>Forgot Your Password?</h1>
 <br />
+<!-- form for entering email address and sending emailverification link-->
 <form class="form-signin" role="form" method="post" action="">
   {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==

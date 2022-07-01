@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
 
+<!-- updates profile information -->
 <form action="" method="POST" enctype="multipart/form-data">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
         messages %} {% for category, message in messages %} {% if category ==
