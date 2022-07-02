@@ -85,7 +85,30 @@ $('#createcomment').on('click', function(e) {
         })
         e.preventDefault();
     })
+// Ajax for deleting video
+$('.deletevideo').on('click', function(e) {
+    var url=$(this).parent().prop('action');
+    var section=$(this).closest('section');
+    console.log(url)
+    $.ajax({
+        url:url,
+        type:'post',
+        contentType:'application/json',
+        success: function(response){
+            if (response) {
+                section.fadeOut(500, function(){ // **add this
+                    $(this).remove();
+                    console.log(response)
+                });
+            }
+            else{
+                console.log('failure')
+            }
 
+        }
+    })
+    e.preventDefault();
+})
 // prevents submitting the form twice on reload
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );

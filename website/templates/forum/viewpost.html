@@ -19,7 +19,7 @@
           {%endif%}
        </div>
       
-        {% if post.user_id==user.id%}
+        {% if post.user_id==user.id or current_user.Admin%}
         <form action="{{ url_for('post.deletepost',postid=post.id) }}" class='deleteform' method="POST">
           <button class='deletebtn btnoutline' action="submit"><i class="bi bi-archive"></i></button>
         </form>

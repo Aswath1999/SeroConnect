@@ -1,10 +1,10 @@
 from flask import Blueprint,render_template,request,flash,redirect,url_for
 from flask_login import login_required,current_user
 from .decorators import check_confirmed
-from .database.models import Post,User,Comment,Image
+from .database.models import Post,User,Comment,Image,Video
 from . import db
 from website import app
-from .post.images import createuserimage,deleteuserimage
+from .post.images import createuserimage,deleteuserimage,createvideo,deletevideo
 
 
 
@@ -56,7 +56,7 @@ def profileinfo():
         image=request.files['file']
         username=User.query.filter_by(username=Username).first()
         if username:
-            flash('Username already exists', category='error')
+            flash('Username already exists', category='success')
             return render_template("profileinfoupdate.html",user=current_user)
         else:
             user.username=Username
@@ -69,12 +69,49 @@ def profileinfo():
                 return render_template('profile.html',user=current_user,posts=posts,postuser=User,postcomment=Comment,postimage=Image)
             return render_template('profile.html',user=current_user,posts=posts,postuser=User,postcomment=Comment,postimage=Image)
 
-@views.route('/podcast',methods=['GET'])
+@views.route('/podcast',methods=['GET','POST'])
 @login_required
 @check_confirmed
 def podcast():
-    return render_template('podcast.html',user=current_user)
+    page=request.args.get('page',1,type=int)
+    videos=Video.query.order_by(Video.date.desc()).paginate(page=page,per_page=4)
+    if "hx_request"  in request.headers:
+        return render_template("viewpodcast.html",user=current_user,videos=videos)
+    return render_template('podcast.html',user=current_user,videos=videos)
+        
+@views.route('/podcastupload',methods=['GET','POST'])
+@login_required
+@check_confirmed
+def uploadpodcast():
+    if request.method == 'POST':
+        video=request.files['file']
+        filename=createvideo(video)
+        if filename:
+            Title=request.form.get('Title')
+            content=request.form.get('content')
+            video=Video(title=Title,content=content,video=filename)
+            db.session.add(video)
+            db.session.commit()
+            flash('Video uploaded successfully','success')
+            return redirect(url_for('views.podcast'))
+        else:
+            flash('error uploading video','error')
+            return redirect(url_for('views.podcast'))
+    return render_template('podcastupload.html',user=current_user)
         
             
-
-
+@views.route('/podcastdelete/<videoid>',methods=['GET','POST'])
+@login_required
+@check_confirmed
+def deletepodcast(videoid):
+    if request.method == 'POST':
+        video = Video.query.filter_by(id=videoid).first()
+        if video:
+            deletevideo(video.id)
+            db.session.delete(video)
+            db.session.commit()
+            return 'success'
+        else:
+            return "no posts found"
+    else:
+        return 'Failure'

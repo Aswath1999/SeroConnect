@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
+
+
+<form action="{{url_for('views.uploadpodcast')}}" method="POST" enctype="multipart/form-data">
+    <h3 align="center">Podcast/Video</h3>
+    <div class="form-group">
+      <label for="Title">Title</label>
+      <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter Title"
+      />
+    </div>
+    <div class="form-group">
+      <label for="content">content</label>
+      <textarea id="content" name="content" rows="4" cols="50"></textarea>
+    </div>
+    <p><input type="file" name="file"></p>
+    <br/>
+    <button type="submit"  class="btn btn-primary">Submit</button>
+</form>
+
+
+{%endblock%}

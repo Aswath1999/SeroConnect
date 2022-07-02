@@ -13,13 +13,15 @@ app=Flask(__name__)
 app.secret_key=app.config['SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 db.init_app(app)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db,render_as_batch=True)
 
 # Image upload
 UPLOAD_FOLDER='static/images/'
+UPLOAD_VIDEO='static/videos'
+app.config['UPLOAD_VIDEO'] = UPLOAD_VIDEO
 app.config['UPLOAD_FOLDER'] =UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 2*1024*1024*10
-app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif','.jpeg']
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif','.jpeg','.mp4']
 
     
 from .views import views
