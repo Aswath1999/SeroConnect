@@ -7,4 +7,4 @@ if __name__=="__main__":
 
 
 # heyiri5559@mahazai.com  Joggy2022@
-# seyela4567@jrvps.com    Sero2022@   (Admin)
+# email:seyela4567@jrvps.com    password:Sero2022@   (Admin)
