@@ -58,10 +58,10 @@
             </a>
           </li>
           <li>
-            <a href="/logout">
-              <i class="bi bi-box-arrow-right"></i> 
+            <a href="{{url_for('views.podcast')}}">
+              <i class="bi bi-rss-fill"></i>
               <div class = "circle"></div>
-              <div class = "title">Logout</div>
+              <div class = "title">Podcast</div>
             </a>
           </li>
           <li>
@@ -72,12 +72,13 @@
             </a>
           </li>
           <li>
-            <a href="{{url_for('views.podcast')}}">
-              <i class="bi bi-rss-fill"></i>
+            <a href="/logout">
+              <i class="bi bi-box-arrow-right"></i> 
               <div class = "circle"></div>
-              <div class = "title">Podcast</div>
+              <div class = "title">Logout</div>
             </a>
           </li>
+          
           {% else %}
           <li>
             <a href="/login">
