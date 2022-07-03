@@ -99,6 +99,12 @@ li a.title:hover{
 .nav li:nth-child(4) a {  
   background:#8ee4af !important;
 }
+.nav li:nth-child(5) a {  
+  background:#d4db71 !important;
+}
+.nav li:nth-child(6) a {  
+  background:#86d32d !important;
+}
 
 .nav li:first-child:hover ~ .background {
   background: #3366ff;
@@ -115,6 +121,14 @@ li a.title:hover{
 
 .nav li:nth-child(4):hover ~ .background {
   background: #8ee4af;
+  opacity: 0.7;
+}
+.nav li:nth-child(5):hover ~ .background {
+  background: #84d3a2;
+  opacity: 0.7;
+}
+.nav li:nth-child(6):hover ~ .background {
+  background: #9cc5eb;
   opacity: 0.7;
 }
 
@@ -229,17 +243,20 @@ div.title{
     box-sizing: border-box;
 }
 
-body {
+/* body {
     
     color: #011a32;
     font: 16px/1.25 'Raleway', sans-serif;
     text-align: center;
-}
+} */
 
 #wrapper {
     margin-left: auto;
     margin-right: auto;
     max-width: 80em;
+    color: #011a32;
+    text-align: center;
+    font: 16px/1.25 'Raleway', sans-serif;
 }
 
 #container {

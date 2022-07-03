@@ -50,7 +50,7 @@
       <br>
       {{post.content}}
       <br>
-      <a href="{{url_for('comments.show_comments',postid=post.id,userid=current_user.id)}}">Comment</a>
+      <a class="btn btn-primary text-uppercase" href="{{url_for('comments.show_comments',postid=post.id,userid=current_user.id)}}">Comment</a>
   </div>
   </section>
   {%endfor%}

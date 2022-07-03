@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}SeroConnect{% endblock %}{% block content%}
 
-<a href="{{url_for('post.createpost')}}">Create post</a>
+<a class="btn btn-primary text-uppercase" href="{{url_for('post.createpost')}}">Create post</a>
 
 <!-- ======================================Post display===================================== -->
 <!-- includes pagination of posts by sending htmx requests to viewposts.html -->
