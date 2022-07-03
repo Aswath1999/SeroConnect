@@ -114,5 +114,9 @@ $('.deletevideo').on('click', function(e) {
         window.history.replaceState( null, null, window.location.href );
     }
     
-
+    // const carousel = new bootstrap.Carousel('#myCarousel')
+    // $('.carousel').carousel({
+    //     interval: 2000
+    // })
+  
 })
