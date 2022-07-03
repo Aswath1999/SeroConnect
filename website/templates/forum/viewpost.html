@@ -10,7 +10,7 @@
         <div class="name">
           {% if post.anonymous==False %}
             {%if postuser.query.filter_by(id=post.user_id).first().userimage%}
-             <h3> <img src="{{url_for('static',filename='images/User/'+postuser.query.filter_by(id=post.user_id).first().userimage)}}">{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
+             <h3><img src="{{url_for('static',filename='images/User/'+postuser.query.filter_by(id=post.user_id).first().userimage)}}">{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
             {%else%}
              <h3> <i class="bi bi-person-circle"></i>{{postuser.query.filter_by(id=post.user_id).first().username }}</h3>
             {%endif%}

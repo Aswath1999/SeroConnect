@@ -232,7 +232,8 @@ div.title{
   width: 24px;
   height: 24px;
   border-radius:50%;
-  padding-right: 3px;
+  float: left;
+  margin-right: 10px;
 }
 /* =======================================home page text ======================================================= */
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,700,900,400italic,700italic,900italic);
