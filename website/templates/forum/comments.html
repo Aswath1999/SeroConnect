@@ -29,13 +29,36 @@
     <div class="images">
       {% set images=postimage.query.filter(postimage.post_id==post.id).all()%}
       {%if images%}
-      {%for image in images %}
-      <div class="image-display">
-        <img src="{{url_for('static',filename='images/'+image.image)}}"  alt="">
+      {%if images|length>1%}
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {%for image in images %}
+          <div class="carousel-item active">
+            <img src="{{url_for('static',filename='images/'+image.image)}}"  class="d-block w-100 {% if loop.counter == 1 %} active {% endif %}"  alt="">
+          </div>
+          {%endfor%}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      {%endfor%}
-      {%endif%}
+      <!-- end -->
+      {%else%} 
+      <div class="image-display">
+        <img src="{{url_for('static',filename='images/'+images[0].image)}}"  alt="">
+      </div>
     </div>
+
+     {%endif%}
+
+    <!-- End image display -->
+    {% endif %}
+   
     {{post.content}}
     <form action="{{url_for('comments.createcomment',postid=post.id,userid=current_user.id)}}" method="POST" class="createcommentform">
       <div class="form-group">
