@@ -21,7 +21,7 @@ UPLOAD_VIDEO='static/videos'
 app.config['UPLOAD_VIDEO'] = UPLOAD_VIDEO
 app.config['UPLOAD_FOLDER'] =UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 2*1024*1024*10
-app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif','.jpeg','.mp4']
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif','.jpeg','.mp4','.mp3']
 
     
 from .views import views

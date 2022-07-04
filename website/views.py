@@ -92,10 +92,10 @@ def uploadpodcast():
             video=Video(title=Title,content=content,video=filename)
             db.session.add(video)
             db.session.commit()
-            flash('Video uploaded successfully','success')
+            flash('Video/Audio uploaded successfully','success')
             return redirect(url_for('views.podcast'))
         else:
-            flash('error uploading video','error')
+            flash('error uploading video/Audio','error')
             return redirect(url_for('views.podcast'))
     return render_template('podcastupload.html',user=current_user)
         

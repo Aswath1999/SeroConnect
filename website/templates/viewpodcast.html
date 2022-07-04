@@ -18,9 +18,15 @@
         
         <!-- Image display -->
         <div class="images">
+          {%if video.video[-3:]=='mp4'%}
             <video width="550" height="320" controls>
                 <source src="{{url_for('static',filename='videos/'+video.video)}}" >
             </video>
+          {%elif video.video[-3:]=='mp3'%}
+          <audio controls>
+            <source src="{{url_for('static',filename='videos/'+video.video)}}" type="audio/mpeg">
+          </audio>
+          {%endif%}
         </div>       
         <br>
         <div class="content">
