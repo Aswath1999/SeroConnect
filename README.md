@@ -41,6 +41,6 @@ mental health and advices the user on how they can handle their problems better.
 - Check main.py for admin email address and password. A sample user id and password is also given
 ## Collaborators
  - Gokulvasan https://github.com/gkvzn
- -Vishva  https://github.com/vishvaTHD
+ - Vishva  https://github.com/vishvaTHD
 ## Licensing
 MIT
