@@ -5,6 +5,8 @@ would have wished to have someone to talk to or just a confirmation that we are 
 It provides users with a forum that enables them to talk about their problems freely and even anonymously. SeroConnect has podcasts and videos that speaks about 
 mental health and advices the user on how they can handle their problems better. 
 ## Technologies
+### Hardware Components
+- A local server with 8GB RAM, 256GB SSD storage, Intel i5 Processor
 ### IDE
 - Visual Studio Code
 ### Frontend
