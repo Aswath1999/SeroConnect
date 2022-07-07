@@ -12,7 +12,7 @@ mental health and advices the user on how they can handle their problems better.
 ### Frontend
 - HTML5, CSS3 And JavaScript
 - Bootstrap 5
-- jQuery
+- jQuery and AJAX
 - htmx
 ### Backend
 - Python
