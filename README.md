@@ -38,7 +38,7 @@ mental health and advices the user on how they can handle their problems better.
 - Install dependencies from requirements.txt file.  
 `pip install -r requirements.txt`. 
 - Create a .env file. Setup email configurations in config.py and variables in .env file.
-- SeroConnect has gmail configurations. To set it up quickly, create variables `GMAIL=Your Gmail` and  `PASSWORD=Your password` in your .env file. Generate app password from gmail if you have two-factor verification setup or you can directly use the env file present here instead of creating one.
+- SeroConnect has gmail configurations. To set it up quickly, create variables `GMAIL=Your Gmail` and  `PASSWORD=Your password` in your .env file. Generate app password from gmail if you have two-factor verification setup.
 - Run main.py to run the application
 - Admin email id:seyela4567@jrvps.com Password:Sero2022@
 - Sample user id:heyiri5559@mahazai.com Password:Joggy2022@
